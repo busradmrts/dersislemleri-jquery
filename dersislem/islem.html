@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ders İşlemleri</title>
+    <style type="text/css">
+        form{
+            margin: 20px 0;
+        }
+        form input, button{
+            padding: 5px;
+        }
+        table{
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td{
+            border: 1px solid #cdcdcd;
+        }
+        table th, table td{
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        function evet(){
+            check = "true";
+        }
+        function hayir(){
+            check = "false"
+        }
+        $(document).ready(function(){
+            $(".ekle").click(function(){
+                var ad = $("#ad").val();
+                var soyad = $("#soyad").val();
+                var ders = $("#ders").val();
+                var vize = $("#vize").val();
+                var final = $("#final").val();
+                var ödev = $("#ödev").val();
+                var ortalama = "";
+                debugger;
+                if ($("input[id='evet']:checked"). val()) {
+                    ortalama = ((Number(document.getElementById("vize").value) * Number(document.getElementById("vizekat").value)) / 100) +
+                        ((Number(document.getElementById("final").value) * Number(document.getElementById("finalkat").value)) / 100) +
+                        ((Number(document.getElementById("ödev").value) * Number(document.getElementById("ödevkat").value)) / 100) ;
+                }
+                else {
+                    ortalama = ((Number(document.getElementById("vize").value) * Number(document.getElementById("vizekat").value)) / 100) +
+                        ((Number(document.getElementById("final").value) * Number(document.getElementById("finalkat").value)) / 100);
+                }
+                var markup = "<tr><td><input type='checkbox' name='record'></td><td>" + ad + "</td><td>" + soyad+ "</td><td>" + ders + "</td><td>" + vize + "</td><td>" + final + "</td><td>" + ödev + "</td><td>" + ortalama + "</td></tr>";
+                $("table tbody").append(markup);
+            });
+            $(".sil").click(function(){
+                $("table tbody").find('input[name="record"]').each(function(){
+                    if($(this).is(":checked")){
+                        $(this).parents("tr").remove();
+                    }
+                });
+            });
+            $(".temizle").click(function(){
+                $("#ad").val('');
+                $("#soyad").val('');
+                $("#ders").val('');
+                $("#vize").val('');
+                $("#final").val('');
+                $("#ödev").val('');
+                $("#vizekat").val('');
+                $("#finalkat").val('');
+                $("#ödevkat").val('');
+            });
+
+            $(document).ready(function () {
+                $("#myTable tr").on("click", function (e) {
+                    $("#ad").val(e.target.parentNode.cells.item(1).innerHTML);
+                    $("#soyad").val(e.target.parentNode.cells.item(2).innerHTML);
+                    $("#ders").val(e.target.parentNode.cells.item(3).innerHTML);
+                    $("#vize").val(e.target.parentNode.cells.item(4).innerHTML);
+                    $("#final").val(e.target.parentNode.cells.item(5).innerHTML);
+                    $("#ödev").val(e.target.parentNode.cells.item(6).innerHTML);
+
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+	<form>
+    Adı:&emsp;&nbsp;&nbsp;<input type="text" id="ad" >&emsp;
+    Soyadı:&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="soyad" >&emsp;
+    Ders Adı:&emsp;<input type="text" id="ders" ><br><br>
+    Vize:&emsp;&nbsp;<input type="text" id="vize" >&emsp;
+    Vize Katkı:&emsp;&nbsp;&nbsp;<input type="text" id="vizekat" ><br><br>
+    Final:&emsp;<input type="text" id="final">&emsp;
+    Final Katkı:&emsp;&nbsp;<input type="text" id="finalkat"><br><br>
+    Ödev:&emsp;<input type="text" id="ödev">&emsp;
+    Ödev Katkı:&emsp;<input type="text" id="ödevkat">
+    <h4>Ödev Notu Eklensin Mi?</h4>
+    <input type="radio" name="radio"    id="evet" checked onclick="evet();" />
+    Evet
+    <input type="radio" name="radio" id="hayır" onclick="hayir();" />
+    Hayır<br><br>
+    <input type="button" class="ekle" value="ekle">
+</form>
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Seç </th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Dersin Adı</th>
+        <th>Vize Notu</th>
+        <th>Final Notu</th>
+        <th>Ödev Notu</th>
+        <th>ortalama</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<button type="button" class="sil">Sil</button>
+<button type="button" class="temizle">Temizle</button>
+</body>
+</html>
